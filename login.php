@@ -1,43 +1,49 @@
-<?php session_start();
+<?php 
 /* comprobar seseion*/
-if (isset($_SESSION['usuario'])){
-	header('Location: index.php');
+
+if(isset($_SESSION['usuario'])){
+	header('login.php');
 }
-
-$errores = '';
-
-/* comprobar si los datos an sido enviados*/
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-	$usuario = filter_var(strtolower($_POST['usuario']), FILTER_SANITIZE_STRING);
-	$password = $_POST['password'];
-	$password = hash('sha512' , $password);
+	$usuario = 'Diego';
+	sha1($usuario);
+	// resultado Sha1() = 1b47e87d02781e58a171f3221a7e4c032e67f2d0
+	$contra = '123';
+	sha1($contra);
+	// resultado Sha1() = 40bd001563085fc35165329ea1ff5c5ecbdbbeef
 	
-	try{
-		$conexion = new PDO('mysql:host=localhost; dbname=login','root', '');
-	} catch (PDOException $e){
-		echo "error: " . $e->getMessage();;
+	$errores = '';
+
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		
+		
+		session_start();
+		$intentos = 0;
+		$contador = $intentos;
+		
+		$user = $_POST['usuario'];
+		$pass = $_POST['password'];
+		
+		if($intentos = 5){
+			header('url: www.uned.ac.cr');
+			
+		
+		}elseif(empty($user) or empty($pass)){
+			$errores .= '<li>Por favor llenar los datos faltantes</li>';
+			
+			$intentos = $intentos+1;
+		
+		} elseif($user == sha1($usuario) and $pass == sha1($contra )){
+			
+			header('Location: http://www.uned.ac.cr/');
+		
+		} 
+		
+		
+	
 	}
-	
-	/* Verificar si hay usuarios*/
-	
-	$estado = $conexion ->prepare('
-	SELECT * FROM usuarios WHERE usuario = :usuario AND pass = :password'
-	);
-	
-	$estado->execute(array(
-		':usuario' =>$usuario,
-		':password' =>$password
-	));
-	
-	$resultado = $estado->fetch();
-	if($resultado !== false){
-		$_SESSION['usuario'] = $usuario;
-		header('Location: index.php');
-	} else {
-		$errores .= '<li> Datos incorrectos</li>';
-	}
-}
 
 
-require 'Vistas/login.view.php';
+	require 'Vistas/login.view.php';
+
 ?>

@@ -10,15 +10,15 @@
 </head>
 <body>
 	<div class="contenedor">
-		<h1 class="titulo">Login</h1>
+		<h1 class="titulo">Login Intentos - <?php echo $contador; ?></h1>
 		<hr class="border">
 			<div class="contenido">
 				<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="formulario" name="login" method="post">
 					<div class="form-group">
-						<i class="icono izquierda fa fa-user"></i><input type="text" name="usuario" class="usuario" placeholder="Usuario" required>
+						<i class="icono izquierda fa fa-user"></i><input type="text" name="usuario" class="usuario" placeholder="Usuario" required="">
 					</div>
 					<div class="form-group">
-						<i class="icono izquierda fa fa-lock"></i><input type="password" name="password" class="password_btn" placeholder="Repetir contraseña" required><i class="submit-btn fa fa-arrow-right" onclick="login.submit()"></i>
+						<i class="icono izquierda fa fa-lock"></i><input type="password" name="password" class="password_btn" placeholder="Contraseña" required=""><i class="submit-btn fa fa-arrow-right" onclick="login.submit()"></i>
 					</div>
 					<?php if(!empty($errores)): ?>
 						<div class="error">
@@ -29,10 +29,7 @@
 					<?php endif; ?>
 				</form>	
 			</div>
-			<p class="texto-registrate">
-				No tienes cuenta?
-				<a id="cerrar" href="registrate.php">Crear cuenta</a>
-			</p>
+
 	</div>
 	
 </body>
